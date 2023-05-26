@@ -48,7 +48,9 @@ public class DataBaseController {
         Statement statement = null;
         try {
             statement = connection.createStatement();
+            deleteTables(statement);
             createTables(statement);
+            fillTables(statement);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -112,10 +114,9 @@ public class DataBaseController {
         try {
             statement = connection.prepareStatement(sql);
             for (int i = 0; i < args.length; i++) {
-                statement.setObject(i, args[i]);
+                statement.setObject(i + 1, args[i]);
             }
-            statement.execute(sql);
-            result = statement.getResultSet();
+            result = statement.executeQuery();
         } catch (SQLException e) {
             if (e.getErrorCode() == 17002) throw new SQLException();
             return e.getMessage();
@@ -958,7 +959,7 @@ public class DataBaseController {
                     "   INSERT INTO Users VALUES(1, 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'); " +
                     "   INSERT INTO Users VALUES(2, 'seller', 'a4279eae47aaa7417da62434795a011ccb0ec870f7f56646d181b5500a892a9a'); " +
                     "   INSERT INTO Users VALUES(3, 'user', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb'); " +
-                    "END"
+                    "END;"
         );
 
         statement.execute(
@@ -974,7 +975,7 @@ public class DataBaseController {
                     "   INSERT INTO Countries VALUES(9, 'Бельгия'); " +
                     "   INSERT INTO Countries VALUES(10, 'Дания'); " +
                     "   INSERT INTO Countries VALUES(11, 'Польша'); " +
-                    "END"
+                    "END;"
         );
 
         statement.execute(
@@ -994,7 +995,7 @@ public class DataBaseController {
                     "   INSERT INTO Car_brands VALUES(13, 5, 'Tesla'); " +
                     "   INSERT INTO Car_brands VALUES(14, 6, 'Renault'); " +
                     "   INSERT INTO Car_brands VALUES(15, 7, 'Skoda'); " +
-                    "END"
+                    "END;"
         );
 
         statement.execute(
@@ -1051,7 +1052,7 @@ public class DataBaseController {
                     "   INSERT INTO Car_model VALUES(50, 15, 'Karoq'); " +
                     "   INSERT INTO Car_model VALUES(51, 15, 'Kodiaq'); " +
                     "   INSERT INTO Car_model VALUES(52, 15, 'Superb');" +
-                    "END"
+                    "END;"
         );
 
         statement.execute(
@@ -1160,7 +1161,7 @@ public class DataBaseController {
                     "   INSERT INTO Car VALUES(102, 51, 'I - restayling'); " +
                     "   INSERT INTO Car VALUES(103, 52, 'II - restayling'); " +
                     "   INSERT INTO Car VALUES(104, 52, 'III'); " +
-                    "END"
+                    "END;"
         );
 
         statement.execute(
@@ -1190,7 +1191,7 @@ public class DataBaseController {
                     "   INSERT INTO Manufacturer VALUES(23, 9, 'Van Wezel'); " +
                     "   INSERT INTO Manufacturer VALUES(24, 10, 'Klokkerholm'); " +
                     "   INSERT INTO Manufacturer VALUES(25, 11, 'Krosno'); " +
-                    "END"
+                    "END;"
         );
 
         statement.execute(
@@ -1218,7 +1219,7 @@ public class DataBaseController {
                     "   INSERT INTO Part_type VALUES(21, 'Воздушный фильтр'); " +
                     "   INSERT INTO Part_type VALUES(22, 'Тормозной цилиндр'); " +
                     "   INSERT INTO Part_type VALUES(23, 'Диск сцепления'); " +
-                    "END"
+                    "END;"
         );
 
         statement.execute(
@@ -1321,7 +1322,7 @@ public class DataBaseController {
                     "   INSERT INTO Parts VALUES(95, 3, 63, 23, 13790); " +
                     "   INSERT INTO Parts VALUES(96, 3, 64, 8, 16590); " +
                     "   INSERT INTO Parts VALUES(97, 3, 64, 24, 10390); " +
-                    "END"
+                    "END;"
         );
 
         statement.execute(
@@ -1330,7 +1331,7 @@ public class DataBaseController {
                     "   INSERT INTO Supplier_types VALUES(2, 'Дилер'); " +
                     "   INSERT INTO Supplier_types VALUES(3, 'Небольшое производство'); " +
                     "   INSERT INTO Supplier_types VALUES(4, 'Мелкий магазин'); " +
-                    "END"
+                    "END;"
         );
 
         statement.execute(
@@ -1358,7 +1359,7 @@ public class DataBaseController {
                     "   INSERT INTO Suppliers VALUES(21, 3, 2, 'Meier autoteile'); " +
                     "   INSERT INTO Suppliers VALUES(22, 4, 1, 'АвтоВосток'); " +
                     "   INSERT INTO Suppliers VALUES(23, 4, 1, 'ВагАвто'); " +
-                    "END"
+                    "END;"
         );
 
         statement.execute(
@@ -1366,7 +1367,7 @@ public class DataBaseController {
                     "   INSERT INTO Dealers VALUES(16, 8); " +
                     "   INSERT INTO Dealers VALUES(17, 3); " +
                     "   INSERT INTO Dealers VALUES(18, 4); " +
-                    "END"
+                    "END;"
         );
 
         statement.execute(
@@ -1422,7 +1423,7 @@ public class DataBaseController {
                     "   INSERT INTO Price_list VALUES(71, 2, 13990, 30); " +
                     "   INSERT INTO Price_list VALUES(73, 2, 10300, 14); " +
                     "   INSERT INTO Price_list VALUES(75, 2, 16000, 20); " +
-                    "END"
+                    "END;"
         );
 
         statement.execute(
@@ -1437,7 +1438,7 @@ public class DataBaseController {
                     "   INSERT INTO Customers VALUES(8, 'Ольга', 'Сидорова', 'sidorova2@mail.com', '8-800-555-35-42');" +
                     "   INSERT INTO Customers VALUES(9, 'Ирина', 'Кузнецова', 'kuznetsova2@mail.com', '8-800-555-35-43');" +
                     "   INSERT INTO Customers VALUES(10, 'Андрей', 'Смирнов', 'smirnov2@mail.com', '8-800-555-35-44');" +
-                    "END"
+                    "END;"
         );
 
         statement.execute(
@@ -1446,27 +1447,71 @@ public class DataBaseController {
     }
 
     private void deleteTables(Statement statement) throws SQLException {
-        statement.execute("DROP TABLE Reject");
-        statement.execute(" DROP TABLE Orders");
-        statement.execute("DROP TABLE Cart_list");
-        statement.execute("DROP TABLE Customers");
-        statement.execute("DROP TABLE Carts");
-        statement.execute("DROP TABLE In_stock");
-        statement.execute("DROP TABLE Stock");
-        statement.execute("DROP TABLE Part_info");
-        statement.execute("DROP TABLE Supply_list");
-        statement.execute("DROP TABLE Supply");
-        statement.execute("DROP TABLE Price_list");
-        statement.execute("DROP TABLE Dealers");
-        statement.execute("DROP TABLE Suppliers");
-        statement.execute("DROP TABLE Supplier_types");
-        statement.execute("DROP TABLE Parts");
-        statement.execute("DROP TABLE Part_type");
-        statement.execute("DROP TABLE Manufacturer");
-        statement.execute("DROP TABLE Car");
-        statement.execute("DROP TABLE Car_model");
-        statement.execute("DROP TABLE Car_brands");
-        statement.execute("DROP TABLE Countries");
+        try { statement.execute("DROP TABLE Users"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Reject"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Orders"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Cart_list"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Customers"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Carts"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE In_stock"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Stock"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Part_info"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Supply_list"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Supply"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Price_list"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Dealers"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Suppliers"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Supplier_types"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Parts"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Part_type"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Manufacturer"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Car"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Car_model"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Car_brands"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
+
+        try { statement.execute("DROP TABLE Countries"); }
+        catch (SQLException e) { if (e.getErrorCode() != 942) throw e;}
     }
 }
 

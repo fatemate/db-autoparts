@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -43,6 +44,8 @@ public class StoreController {
                     .setImage(new Image(StoreApplication.class.getResource("icon-clear.png").openStream()));
             ((ImageView) sqlPageSelectAllButton.getGraphic())
                     .setImage(new Image(StoreApplication.class.getResource("icon-select.png").openStream()));
+            ((ImageView) insertPageSearchButton.getGraphic())
+                    .setImage(new Image(StoreApplication.class.getResource("search.png").openStream()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -105,8 +108,10 @@ public class StoreController {
     TabPane authorizedPage;
 
     // InsertPage
+    @FXML Button insertPageSearchButton;
     // QueriesPage
     @FXML ComboBox<Query> queriesPageQuerieChoice;
+    @FXML Button queriesPageExecuteButton;
     @FXML TableView queriesPageTable;
     @FXML Label queriesPageMessageField;
     @FXML Label queriesPageLabel1;
@@ -134,16 +139,299 @@ public class StoreController {
     @FXML DatePicker queriesPageDate7;
     @FXML DatePicker queriesPageDate8;
 
-    @FXML
-    protected void executeSqlQuery() {
-        if (queriesPageQuerieChoice.getValue() == null) return;
+    ObservableList<ChoiceHelper> observableList1;
+    ObservableList<ChoiceHelper> observableList2;
+    ObservableList<ChoiceHelper> observableList3;
+    ObservableList<ChoiceHelper> observableList4;
+    ObservableList<ChoiceHelper> observableList5;
+    ObservableList<ChoiceHelper> observableList6;
+    ObservableList<ChoiceHelper> observableList7;
+    ObservableList<ChoiceHelper> observableList8;
 
-    }
 
     @FXML
     protected void chooceSqlQuery() {
         if (queriesPageQuerieChoice.getValue() == null) return;
         clearQueryPage();
+        queriesPageExecuteButton.setDisable(true);
+
+        switch (queriesPageQuerieChoice.getValue().toString()) {
+            case "Запрос 4":
+            case "Запрос 5.1":
+            case "Запрос 5.2":
+            case "Запрос 8":
+            case "Запрос 13":
+            case "Запрос 15.1":
+            case "Запрос 15.2":
+            case "Запрос 16.1":
+            case "Запрос 16.2":
+                queriesPageExecuteButton.setDisable(false);
+                break;
+
+            case "Запрос 1.1":
+            case "Запрос 1.2":
+                queriesPageLabel1.setText("Тип поставщика:");
+                queriesPageLabel1.setVisible(true);
+                observableList1 = FXCollections.observableArrayList();
+                getValuesFromQuery("SELECT * FROM Supplier_types", queriesPageChoice1, observableList1);
+                queriesPageChoice1.getEditor().clear();
+                initComboBox(queriesPageChoice1, observableList1);
+                queriesPageChoice1.setVisible(true);
+                queriesPageChoice1.setOnAction(event -> comboBoxAllowOnlyExisting(event));
+
+                queriesPageLabel2.setText("Вид товара:");
+                queriesPageLabel2.setVisible(true);
+                observableList2 = FXCollections.observableArrayList();
+                getValuesFromQuery("SELECT * FROM part_type", queriesPageChoice2, observableList2);
+                queriesPageChoice2.getEditor().clear();
+                initComboBox(queriesPageChoice2, observableList2);
+                queriesPageChoice2.setVisible(true);
+                queriesPageChoice2.setOnAction(event -> comboBoxAllowOnlyExisting(event));
+
+                queriesPageLabel3.setText("Товар:");
+                queriesPageLabel3.setVisible(true);
+                observableList3 = FXCollections.observableArrayList();
+                getValuesFromQuery(
+                        "SELECT part_id, " +
+                        "   part_id || ' - ' || Part_type.title || ' ' || Manufacturer.title || ' для ' || " +
+                        "   Car_brands.title || ' ' || Car_model.title || ' ' || Car.generation AS name " +
+                        "FROM Parts " +
+                        "JOIN Manufacturer USING (manufacturer_id) " +
+                        "JOIN Car USING (car_id) " +
+                        "JOIN Car_model USING (model_id) " +
+                        "JOIN Car_brands USING (brand_id) " +
+                        "JOIN Part_type ON part_type = Part_type.type_id",
+                        queriesPageChoice3,
+                        observableList3
+                );
+                queriesPageChoice3.getEditor().clear();
+                initComboBox(queriesPageChoice3, observableList3);
+                queriesPageChoice3.setVisible(true);
+                queriesPageChoice3.setOnAction(event -> comboBoxAllowOnlyExisting(event));
+
+                queriesPageLabel4.setText("Объём:");
+                queriesPageLabel4.setVisible(true);
+                Pattern pattern = Pattern.compile("\\d*");
+                TextFormatter<String> formatter = new TextFormatter<>(change -> {
+                    if (!pattern.matcher(change.getControlNewText()).matches()) {
+                        return null;
+                    }
+                    return change;
+                });
+                queriesPageChoice4.getEditor().clear();
+                queriesPageChoice4.getEditor().setTextFormatter(formatter);
+                queriesPageChoice4.setVisible(true);
+                queriesPageChoice4.setOnAction(event -> queryFieldChanged());
+
+                queriesPageLabel5.setText("Дата начала:");
+                queriesPageLabel5.setVisible(true);
+                queriesPageDate5.setDayCellFactory(picker -> new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate date, boolean empty) {
+                        super.updateItem(date, empty);
+                        if (queriesPageDate6.getValue() != null)
+                            setDisable(date.isAfter(queriesPageDate6.getValue())); // Отключаем ячейки дней, которые меньше минимальной даты
+                    }
+                });
+                queriesPageDate5.setVisible(true);
+                queriesPageDate5.getEditor().clear();
+                queriesPageDate5.setOnAction(event -> queryFieldChanged());
+
+                queriesPageLabel6.setText("Дата конца:");
+                queriesPageLabel6.setVisible(true);
+                queriesPageDate6.setDayCellFactory(picker -> new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate date, boolean empty) {
+                        super.updateItem(date, empty);
+                        if (queriesPageDate5.getValue() != null)
+                            setDisable(date.isBefore(queriesPageDate5.getValue())); // Отключаем ячейки дней, которые меньше минимальной даты
+                    }
+                });
+                queriesPageDate6.setVisible(true);
+                queriesPageDate6.getEditor().clear();
+                queriesPageDate6.setOnAction(event -> queryFieldChanged());
+                //queriesPageChoice1
+
+            case "Запрос 2":
+
+            case "Запрос 3.1":
+            case "Запрос 3.2":
+
+            case "Запрос 6":
+
+            case "Запрос 7.1":
+
+            case "Запрос 7.2":
+
+            case "Запрос 9.1":
+            case "Запрос 9.2":
+
+            case "Запрос 10":
+
+            case "Запрос 11":
+
+            case "Запрос 12":
+
+            case "Запрос 14":
+
+            default:
+        }
+        queriesPageQuerieChoice.requestFocus();
+    }
+
+    protected void executeQueryCommand(String query, Object... args) {
+        queriesPageTable.setVisible(false);
+        queriesPageMessageField.setVisible(false);
+
+        Task<Object> task = new Task<Object>() {
+            @Override
+            protected Object call() throws Exception {
+                Object sqlResult = null;
+                sqlResult = DataBaseController.getInstance().executePreparedStatement(query, args);
+                return sqlResult;
+            }
+        };
+
+        task.setOnSucceeded(event -> {
+            Object result = task.getValue();
+            if (queriesPageMessageField.isVisible() || queriesPageTable.isVisible()) return;
+
+            if (result instanceof String) {
+                queriesPageMessageField.setText((String) result);
+                queriesPageMessageField.setVisible(true);
+            }
+            else {
+                if (result instanceof ResultSet) {
+                    TableUtils.setTableFromSqlResult(queriesPageTable, (ResultSet) result);
+                    queriesPageTable.setVisible(true);
+                }
+            }
+        });
+
+        task.setOnFailed(event -> {
+            Throwable exception = task.getException();
+
+            if (exception instanceof SQLException) {
+                sqlConnectionLost();
+            }
+        });
+
+        new Thread(task).start();
+    }
+
+    @FXML
+    protected void executeSqlQuery() {
+        switch (queriesPageQuerieChoice.getValue().toString()) {
+            case "Запрос 4":
+                executeQueryCommand(
+                        Queries.getInstance().getQueries()
+                                .filtered(query -> query.toString().equals("Запрос 4"))
+                                .get(0)
+                                .getQuery()
+                );
+                break;
+
+            case "Запрос 5.1":
+            case "Запрос 5.2":
+            case "Запрос 8":
+            case "Запрос 13":
+            case "Запрос 15.1":
+            case "Запрос 15.2":
+            case "Запрос 16.1":
+            case "Запрос 16.2":
+                break;
+
+            case "Запрос 1.1":
+                executeQueryCommand(
+                        Queries.getInstance().getQueries()
+                                .filtered(query -> query.toString().equals("Запрос 1.1"))
+                                .get(0)
+                                .getQuery(),
+                        ((ChoiceHelper) queriesPageChoice1
+                                .getItems()
+                                .filtered(element ->
+                                        element
+                                                .toString()
+                                                .equals(queriesPageChoice1
+                                                        .getSelectionModel()
+                                                        .getSelectedItem()
+                                                        .toString()
+                                                )
+                                )
+                                .get(0)).getId(),
+                        ((ChoiceHelper) queriesPageChoice2
+                                .getItems()
+                                .filtered(element ->
+                                        element
+                                                .toString()
+                                                .equals(queriesPageChoice2
+                                                        .getSelectionModel()
+                                                        .getSelectedItem()
+                                                        .toString()
+                                                )
+                                )
+                                .get(0)).getId(),
+                        ((ChoiceHelper) queriesPageChoice1
+                                .getItems()
+                                .filtered(element ->
+                                        element
+                                                .toString()
+                                                .equals(queriesPageChoice1
+                                                        .getSelectionModel()
+                                                        .getSelectedItem()
+                                                        .toString()
+                                                )
+                                )
+                                .get(0)).getId(),
+                        queriesPageDate5.getValue(),
+                        queriesPageDate6.getValue(),
+                        ((ChoiceHelper) queriesPageChoice3
+                                .getItems()
+                                .filtered(element ->
+                                        element
+                                                .toString()
+                                                .equals(queriesPageChoice3
+                                                        .getSelectionModel()
+                                                        .getSelectedItem()
+                                                        .toString()
+                                                )
+                                )
+                                .get(0)).getId(),
+                        Integer.parseInt((String)queriesPageChoice4.getValue())
+                );
+                break;
+
+            case "Запрос 1.2":
+                break;
+
+            case "Запрос 2":
+
+            case "Запрос 3.1":
+            case "Запрос 3.2":
+
+            case "Запрос 6":
+
+            case "Запрос 7.1":
+
+            case "Запрос 7.2":
+
+            case "Запрос 9.1":
+            case "Запрос 9.2":
+
+            case "Запрос 10":
+
+            case "Запрос 11":
+
+            case "Запрос 12":
+
+            case "Запрос 14":
+
+            default:
+        }
+    }
+
+    @FXML
+    protected void queryFieldChanged() {
         switch (queriesPageQuerieChoice.getValue().toString()) {
             case "Запрос 4":
             case "Запрос 5.1":
@@ -158,56 +446,20 @@ public class StoreController {
 
             case "Запрос 1.1":
             case "Запрос 1.2":
-                queriesPageLabel1.setText("Тип поставщика:");
-                queriesPageLabel1.setVisible(true);
-                getValuesFromQuery("SELECT * FROM Supplier_types", queriesPageChoice1);
-                initComboBox(queriesPageChoice1);
-                queriesPageChoice1.setVisible(true);
-
-                queriesPageLabel2.setText("Вид товара:");
-                queriesPageLabel2.setVisible(true);
-                queriesPageChoice2.setVisible(true);
-
-                queriesPageLabel3.setText("Товар:");
-                queriesPageLabel3.setVisible(true);
-                queriesPageChoice3.setVisible(true);
-
-                queriesPageLabel4.setText("Объём:");
-                queriesPageLabel4.setVisible(true);
-                Pattern pattern = Pattern.compile("\\d*");
-                TextFormatter<String> formatter = new TextFormatter<>(change -> {
-                    if (!pattern.matcher(change.getControlNewText()).matches()) {
-                        return null;
-                    }
-                    return change;
-                });
-                queriesPageChoice4.getEditor().setTextFormatter(formatter);
-                queriesPageChoice4.setVisible(true);
-
-                queriesPageLabel5.setText("Дата начала:");
-                queriesPageLabel5.setVisible(true);
-                queriesPageDate5.setDayCellFactory(picker -> new DateCell() {
-                    @Override
-                    public void updateItem(LocalDate date, boolean empty) {
-                        super.updateItem(date, empty);
-                        if (queriesPageDate6.getValue() != null)
-                            setDisable(date.isAfter(queriesPageDate6.getValue())); // Отключаем ячейки дней, которые меньше минимальной даты
-                    }
-                });
-                queriesPageDate5.setVisible(true);
-
-                queriesPageLabel6.setText("Дата конца:");
-                queriesPageLabel6.setVisible(true);
-                queriesPageDate6.setDayCellFactory(picker -> new DateCell() {
-                    @Override
-                    public void updateItem(LocalDate date, boolean empty) {
-                        super.updateItem(date, empty);
-                        if (queriesPageDate5.getValue() != null)
-                            setDisable(date.isBefore(queriesPageDate5.getValue())); // Отключаем ячейки дней, которые меньше минимальной даты
-                    }
-                });
-                queriesPageDate6.setVisible(true);
-                //queriesPageChoice1
+                if (
+                        queriesPageChoice1.getSelectionModel().getSelectedItem() != null
+                        && queriesPageChoice2.getSelectionModel().getSelectedItem() != null
+                        && queriesPageChoice3.getSelectionModel().getSelectedItem() != null
+                        && queriesPageChoice4.getValue() != null
+                        && !queriesPageChoice4.getValue().toString().isEmpty()
+                        && queriesPageDate5.getValue() != null
+                        && queriesPageDate6.getValue() != null
+                ) {
+                    queriesPageExecuteButton.setDisable(false);
+                } else {
+                    queriesPageExecuteButton.setDisable(true);
+                }
+                break;
 
             case "Запрос 2":
 
@@ -292,13 +544,14 @@ public class StoreController {
     }
 
     @FXML
-    protected void comboBoxAllowOnlyExisting(ActionEvent event) {
+    protected void comboBoxAllowOnlyExisting(Event event) {
         ComboBox comboBox = (ComboBox)event.getSource();
         String input = comboBox.getEditor().getText();
         if (comboBox.getItems().stream().filter(element -> element.toString().equals(input)).toList().isEmpty()) {
             comboBox.getSelectionModel().clearSelection();
             comboBox.setValue(null);
         }
+        queryFieldChanged();
     }
 
     // SQLPage
@@ -378,19 +631,18 @@ public class StoreController {
         sqlPageProgressIndicator.setVisible(true);
     }
 
-    private void initComboBox(ComboBox comboBox) {
+    private void initComboBox(ComboBox comboBox, ObservableList<ChoiceHelper> list) {
         comboBox.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             if (!comboBox.isShowing()) {
                 comboBox.show();
             }
-            comboBox.getItems().setAll(comboBox.getItems().stream()
-                    .filter(item -> ((ChoiceHelper)item).getName().toLowerCase().startsWith(newValue.toLowerCase()))
-                    .collect(Collectors.toList()));
+            if (comboBox.getSelectionModel().getSelectedItem() == null)
+                comboBox.setItems(list.filtered(item -> item.getName().toLowerCase().startsWith(newValue.toLowerCase())));
         });
     }
 
-    private void getValuesFromQuery(String sql, ComboBox box) {
-        ObservableList<ChoiceHelper> list = FXCollections.observableArrayList();
+    private void getValuesFromQuery(String sql, ComboBox box, ObservableList<ChoiceHelper> list) {
+        list.clear();
         box.setItems(null);
 
         Task<Object> task = new Task<Object>() {
@@ -404,7 +656,7 @@ public class StoreController {
         task.setOnSucceeded(event -> {
             Object result = task.getValue();
 
-            if (box.getItems() != null) return;
+            if (box.getItems() != null || !list.isEmpty()) return;
 
             if (result instanceof ResultSet) {
                 ResultSet resultSet = (ResultSet) result;

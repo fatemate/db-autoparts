@@ -8,10 +8,11 @@ import javafx.stage.Stage;
 import ru.edu.nsu.fit.martynov.autoparts.db.DataBaseController;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class StoreApplication extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(StoreApplication.class.getResource("app-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
         StoreController controller = fxmlLoader.getController();

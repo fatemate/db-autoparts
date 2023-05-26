@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.edu.nsu.fit.martynov.autoparts.StoreController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.edu.nsu.fit.martynov.autoparts.StoreController">
    <children>
       <AnchorPane fx:id="loginPage" layoutX="349.0" layoutY="185.0" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -55,16 +55,112 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView layoutX="150.0" layoutY="146.0" prefHeight="250.0" prefWidth="250.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="100.0" />
+                        <ListView fx:id="insertPageList" layoutX="150.0" layoutY="146.0" prefHeight="250.0" prefWidth="250.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="100.0" />
                         <Separator layoutX="402.0" layoutY="186.0" orientation="VERTICAL" prefHeight="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="0.0" />
-                        <TextField layoutX="87.0" layoutY="101.0" prefHeight="26.0" prefWidth="210.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0" />
-                        <Button layoutX="260.0" layoutY="49.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="38.0" AnchorPane.topAnchor="50.0" />
-                        <Label layoutX="436.0" layoutY="50.0" prefHeight="50.0" text="Label" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="30.0">
+                        <TextField fx:id="insertPageSearchField" layoutX="87.0" layoutY="101.0" prefHeight="26.0" prefWidth="210.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0" />
+                        <Button fx:id="insertPageSearchButton" layoutX="260.0" layoutY="49.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="38.0" AnchorPane.topAnchor="50.0">
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic></Button>
+                        <Label fx:id="insertPageTitle" alignment="CENTER" layoutX="436.0" layoutY="50.0" prefHeight="50.0" text="Label" textAlignment="CENTER" visible="false" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="30.0">
                            <font>
                               <Font name="Arial Bold" size="18.0" />
                            </font>
                         </Label>
-                        <ComboBox layoutX="469.0" layoutY="100.0" prefWidth="150.0" />
+                        <Label fx:id="insertPageLabel1" layoutX="400.0" layoutY="112.0" prefHeight="26.0" prefWidth="75.0" text="Label-1" visible="false" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="125.0">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="insertPageLabel3" layoutX="394.0" layoutY="169.0" prefHeight="26.0" prefWidth="75.0" text="Label-3" visible="false" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="175.0">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="insertPageLabel5" layoutX="412.0" layoutY="225.0" prefHeight="26.0" prefWidth="75.0" text="Label-5" visible="false" AnchorPane.leftAnchor="400.0">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="insertPageLabel7" layoutX="412.0" layoutY="275.0" prefHeight="26.0" prefWidth="75.0" text="Label-7" visible="false" AnchorPane.leftAnchor="400.0">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="insertPageLabel9" layoutX="376.0" layoutY="327.0" prefHeight="26.0" prefWidth="75.0" text="Label-9" visible="false" AnchorPane.leftAnchor="400.0">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="insertPageLabel11" layoutX="391.0" layoutY="375.0" prefHeight="26.0" prefWidth="75.0" text="Label-11" visible="false" AnchorPane.leftAnchor="400.0">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="insertPageLabel2" layoutX="700.0" layoutY="127.0" prefHeight="26.0" prefWidth="75.0" text="Label-2" visible="false" AnchorPane.leftAnchor="695.0" AnchorPane.topAnchor="125.0">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="insertPageLabel4" layoutX="700.0" layoutY="177.0" prefHeight="26.0" prefWidth="75.0" text="Label-4" visible="false" AnchorPane.leftAnchor="695.0" AnchorPane.topAnchor="175.0">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="insertPageLabel6" layoutX="700.0" layoutY="223.0" prefHeight="26.0" prefWidth="75.0" text="Label-6" visible="false" AnchorPane.leftAnchor="695.0" AnchorPane.topAnchor="225.0">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="insertPageLabel8" layoutX="700.0" layoutY="273.0" prefHeight="26.0" prefWidth="75.0" text="Label-8" visible="false" AnchorPane.leftAnchor="695.0" AnchorPane.topAnchor="275.0">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="insertPageLabel10" layoutX="700.0" layoutY="325.0" prefHeight="26.0" prefWidth="75.0" text="Label-10" visible="false" AnchorPane.leftAnchor="695.0" AnchorPane.topAnchor="325.0">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="insertPageLabel12" layoutX="700.0" layoutY="377.0" prefHeight="26.0" prefWidth="75.0" text="Label-12" visible="false" AnchorPane.leftAnchor="695.0" AnchorPane.topAnchor="375.0">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="insertPageBox1" editable="true" layoutX="468.0" layoutY="108.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="125.0" />
+                        <ComboBox fx:id="insertPageBox3" editable="true" layoutX="462.0" layoutY="165.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="175.0" />
+                        <ComboBox fx:id="insertPageBox5" editable="true" layoutX="480.0" layoutY="221.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="225.0" />
+                        <ComboBox fx:id="insertPageBox7" editable="true" layoutX="480.0" layoutY="271.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="275.0" />
+                        <ComboBox fx:id="insertPageBox9" editable="true" layoutX="444.0" layoutY="323.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="325.0" />
+                        <ComboBox fx:id="insertPageBox11" editable="true" layoutX="459.0" layoutY="371.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="375.0" />
+                        <ComboBox fx:id="insertPageBox2" editable="true" layoutX="768.0" layoutY="123.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.leftAnchor="775.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="125.0" />
+                        <ComboBox fx:id="insertPageBox4" editable="true" layoutX="768.0" layoutY="173.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="175.0" />
+                        <ComboBox fx:id="insertPageBox6" editable="true" layoutX="768.0" layoutY="219.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="225.0" />
+                        <ComboBox fx:id="insertPageBox8" editable="true" layoutX="768.0" layoutY="269.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="275.0" />
+                        <ComboBox fx:id="insertPageBox10" editable="true" layoutX="768.0" layoutY="321.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="325.0" />
+                        <ComboBox fx:id="insertPageBox12" editable="true" layoutX="768.0" layoutY="373.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="375.0" />
+                        <Button fx:id="insertPageExecuteButton" layoutX="588.0" layoutY="490.0" mnemonicParsing="false" onMouseClicked="#executeSqlQuery" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 20; -fx-border-width: 5px; -fx-border-color: #b35252; -fx-border-radius: 20; -fx-background-color: #C75C5C;" text="Выполнить" textFill="WHITE" visible="false" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="590.0" AnchorPane.rightAnchor="260.0">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Label fx:id="insertPageMessage" alignment="CENTER" layoutX="400.0" layoutY="440.0" prefHeight="50.0" prefWidth="526.0" text="Label" textFill="#a40000" visible="false" wrapText="true" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="415.0">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="insertPageDatePicker1" layoutX="468.0" layoutY="64.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="125.0" />
+                        <DatePicker fx:id="insertPageDatePicker3" layoutX="478.0" layoutY="74.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="175.0" />
+                        <DatePicker fx:id="insertPageDatePicker5" layoutX="480.0" layoutY="87.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="225.0" />
+                        <DatePicker fx:id="insertPageDatePicker7" layoutX="480.0" layoutY="275.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="275.0" />
+                        <DatePicker fx:id="insertPageDatePicker9" layoutX="480.0" layoutY="325.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="325.0" />
+                        <DatePicker fx:id="insertPageDatePicker11" layoutX="480.0" layoutY="375.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="375.0" />
+                        <DatePicker fx:id="insertPageDatePicker2" layoutX="757.0" layoutY="121.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="125.0" />
+                        <DatePicker fx:id="insertPageDatePicker4" layoutX="775.0" layoutY="175.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="175.0" />
+                        <DatePicker fx:id="insertPageDatePicker6" layoutX="775.0" layoutY="225.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="225.0" />
+                        <DatePicker fx:id="insertPageDatePicker8" layoutX="775.0" layoutY="273.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="275.0" />
+                        <DatePicker fx:id="insertPageDatePicker10" layoutX="775.0" layoutY="327.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="325.0" />
+                        <DatePicker fx:id="insertPageDatePicker12" layoutX="775.0" layoutY="375.0" prefHeight="26.0" prefWidth="150.0" visible="false" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="375.0" />
                      </children>
                   </AnchorPane>
             </content>
@@ -119,22 +215,22 @@
                               <Font name="Arial" size="12.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="queriesPageChoice1" editable="true" layoutX="182.0" layoutY="118.0" onAction="#comboBoxAllowOnlyExisting" prefHeight="26.0" prefWidth="175.0" visible="false" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="130.0" />
-                        <ComboBox fx:id="queriesPageChoice2" editable="true" layoutX="126.0" layoutY="234.0" prefHeight="26.0" prefWidth="175.0" visible="false" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="170.0" />
-                        <ComboBox fx:id="queriesPageChoice3" editable="true" layoutX="116.0" layoutY="224.0" prefHeight="26.0" prefWidth="175.0" visible="false" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="210.0" />
-                        <ComboBox fx:id="queriesPageChoice4" editable="true" layoutX="88.0" layoutY="260.0" prefHeight="26.0" prefWidth="175.0" visible="false" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="250.0" />
-                        <ComboBox fx:id="queriesPageChoice5" editable="true" layoutX="98.0" layoutY="270.0" prefHeight="26.0" prefWidth="175.0" visible="false" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="290.0" />
-                        <ComboBox fx:id="queriesPageChoice6" editable="true" layoutX="125.0" layoutY="337.0" prefHeight="26.0" prefWidth="175.0" visible="false" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="330.0" />
-                        <ComboBox fx:id="queriesPageChoice7" editable="true" layoutX="149.0" layoutY="374.0" prefHeight="26.0" prefWidth="175.0" visible="false" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="370.0" />
-                        <ComboBox fx:id="queriesPageChoice8" editable="true" layoutX="159.0" layoutY="384.0" prefHeight="26.0" prefWidth="175.0" visible="false" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="410.0" />
-                        <DatePicker fx:id="queriesPageDate1" layoutX="100.0" layoutY="100.0" prefHeight="26.0" prefWidth="175.0" visible="false" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="130.0" />
-                        <DatePicker fx:id="queriesPageDate2" layoutX="98.0" layoutY="151.0" prefHeight="26.0" prefWidth="175.0" visible="false" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="170.0" />
-                        <DatePicker fx:id="queriesPageDate3" layoutX="108.0" layoutY="161.0" prefHeight="26.0" prefWidth="175.0" visible="false" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="210.0" />
-                        <DatePicker fx:id="queriesPageDate4" layoutX="173.0" layoutY="235.0" prefHeight="26.0" prefWidth="175.0" visible="false" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="250.0" />
-                        <DatePicker fx:id="queriesPageDate5" layoutX="120.0" layoutY="154.0" prefHeight="26.0" prefWidth="175.0" visible="false" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="290.0" />
-                        <DatePicker fx:id="queriesPageDate6" layoutX="140.0" layoutY="167.0" prefHeight="26.0" prefWidth="175.0" visible="false" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="330.0" />
-                        <DatePicker fx:id="queriesPageDate7" layoutX="160.0" layoutY="185.0" prefHeight="26.0" prefWidth="175.0" visible="false" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="370.0" />
-                        <DatePicker fx:id="queriesPageDate8" layoutX="123.0" layoutY="193.0" prefHeight="26.0" prefWidth="175.0" visible="false" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="410.0" />
+                        <ComboBox fx:id="queriesPageChoice1" editable="true" layoutX="182.0" layoutY="118.0" onAction="#comboBoxAllowOnlyExisting" prefHeight="26.0" prefWidth="160.0" visible="false" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="130.0" />
+                        <ComboBox fx:id="queriesPageChoice2" editable="true" layoutX="126.0" layoutY="234.0" onAction="#comboBoxAllowOnlyExisting" prefHeight="26.0" prefWidth="160.0" visible="false" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="170.0" />
+                        <ComboBox fx:id="queriesPageChoice3" editable="true" layoutX="116.0" layoutY="224.0" onAction="#comboBoxAllowOnlyExisting" prefHeight="26.0" prefWidth="160.0" visible="false" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="210.0" />
+                        <ComboBox fx:id="queriesPageChoice4" editable="true" layoutX="88.0" layoutY="260.0" prefHeight="26.0" prefWidth="160.0" visible="false" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="250.0" />
+                        <ComboBox fx:id="queriesPageChoice5" editable="true" layoutX="98.0" layoutY="270.0" prefHeight="26.0" prefWidth="160.0" visible="false" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="290.0" />
+                        <ComboBox fx:id="queriesPageChoice6" editable="true" layoutX="125.0" layoutY="337.0" prefHeight="26.0" prefWidth="160.0" visible="false" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="330.0" />
+                        <ComboBox fx:id="queriesPageChoice7" editable="true" layoutX="149.0" layoutY="374.0" prefHeight="26.0" prefWidth="160.0" visible="false" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="370.0" />
+                        <ComboBox fx:id="queriesPageChoice8" editable="true" layoutX="159.0" layoutY="384.0" prefHeight="26.0" prefWidth="160.0" visible="false" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="410.0" />
+                        <DatePicker fx:id="queriesPageDate1" layoutX="100.0" layoutY="100.0" prefHeight="26.0" prefWidth="160.0" visible="false" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="130.0" />
+                        <DatePicker fx:id="queriesPageDate2" layoutX="98.0" layoutY="151.0" prefHeight="26.0" prefWidth="160.0" visible="false" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="170.0" />
+                        <DatePicker fx:id="queriesPageDate3" layoutX="108.0" layoutY="161.0" prefHeight="26.0" prefWidth="160.0" visible="false" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="210.0" />
+                        <DatePicker fx:id="queriesPageDate4" layoutX="173.0" layoutY="235.0" prefHeight="26.0" prefWidth="160.0" visible="false" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="250.0" />
+                        <DatePicker fx:id="queriesPageDate5" layoutX="120.0" layoutY="154.0" prefHeight="26.0" prefWidth="160.0" visible="false" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="290.0" />
+                        <DatePicker fx:id="queriesPageDate6" layoutX="140.0" layoutY="167.0" prefHeight="26.0" prefWidth="160.0" visible="false" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="330.0" />
+                        <DatePicker fx:id="queriesPageDate7" layoutX="160.0" layoutY="185.0" prefHeight="26.0" prefWidth="160.0" visible="false" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="370.0" />
+                        <DatePicker fx:id="queriesPageDate8" layoutX="123.0" layoutY="193.0" prefHeight="26.0" prefWidth="160.0" visible="false" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="410.0" />
                         <Separator layoutX="379.0" layoutY="210.0" orientation="VERTICAL" prefHeight="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="0.0" />
                         <Button fx:id="queriesPageExecuteButton" layoutX="127.0" layoutY="501.0" mnemonicParsing="false" onMouseClicked="#executeSqlQuery" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 20; -fx-border-width: 5px; -fx-border-color: #b35252; -fx-border-radius: 20; -fx-background-color: #C75C5C;" text="Выполнить" textFill="WHITE" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="100.0">
                            <font>

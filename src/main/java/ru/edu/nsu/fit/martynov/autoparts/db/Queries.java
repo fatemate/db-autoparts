@@ -226,22 +226,22 @@ public class Queries {
                                 " 	 Manufacturer.title AS \"Производитель\", " +
                                 " 	 car_name AS \"Автомобиль\", " +
                                 " 	 count AS \"Кол-во\" " +
-                                "FROM (" +
+                                "FROM ( " +
                                 "SELECT cell_id, " +
                                 " 	 	 part_id, " +
                                 " 	 	 manufacturer_id, " +
                                 " 	 	 car_id, " +
-                                " 	 	 part_type," +
-                                "  	 	 SUM(count) AS count" +
+                                " 	 	 part_type, " +
+                                "  	 	 SUM(count) AS count " +
                                 "	FROM In_stock " +
                                 "	JOIN Part_info ON In_stock.Part_info = Part_info.info_id " +
-                                "	JOIN Parts USING (part_id)" +
-                                " 	GROUP BY cell_id, part_id, manufacturer_id, car_id, part_type" +
-                                ")" +
-                                "JOIN Manufacturer USING (manufacturer_id)" +
-                                "JOIN Car_view USING (car_id)" +
-                                "JOIN Part_type ON Part_type.type_id = part_type" +
-                                "ORDER BY cell_id"
+                                "	JOIN Parts USING (part_id) " +
+                                " 	GROUP BY cell_id, part_id, manufacturer_id, car_id, part_type " +
+                                ") " +
+                                "JOIN Manufacturer USING (manufacturer_id) " +
+                                "JOIN Car_view USING (car_id) " +
+                                "JOIN Part_type ON Part_type.type_id = part_type " +
+                                "ORDER BY cell_id "
                 )
         );
 

@@ -17,9 +17,10 @@ public class StoreApplication extends Application {
         StoreController controller = fxmlLoader.getController();
         stage.setTitle("Auto parts Store");
         stage.getIcons().add(new Image(StoreApplication.class.getResource("favicon.png").openStream()));
-        controller.setLoginPageImage(new Image(StoreApplication.class.getResource("favicon.png").openStream()));
+        controller.init();
         controller.setLoginPageErrorMessage("Incorret login or password.\nTry again!");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
         //DataBaseController.getInstance().init();
     }

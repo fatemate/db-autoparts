@@ -5,9 +5,10 @@ import ru.edu.nsu.fit.martynov.autoparts.dto.UserDto;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 
 public class AuthorizationManager {
-    public static boolean authorize(String login, String password) {
+    public static boolean authorize(String login, String password) throws SQLException {
         UserDto userInfo = DataBaseController.getInstance().getUserByLogin(login);
         if (userInfo == null) return false;
         if (hashPassword(password).equals(userInfo.password()))

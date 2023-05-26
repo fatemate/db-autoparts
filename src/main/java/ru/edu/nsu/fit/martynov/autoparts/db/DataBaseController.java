@@ -1,6 +1,8 @@
 package ru.edu.nsu.fit.martynov.autoparts.db;
 import ru.edu.nsu.fit.martynov.autoparts.dto.UserDto;
 
+import java.io.Reader;
+import java.math.BigDecimal;
 import java.sql.*;
 
 public class DataBaseController {
@@ -19,14 +21,22 @@ public class DataBaseController {
         );
     }
 
-    public static DataBaseController getInstance() {
+    public static DataBaseController getInstance() throws SQLException {
         if (controller == null) {
             synchronized (DataBaseController.class) {
                 if (controller == null) {
-                    try {
-                        controller = new DataBaseController();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+                    controller = new DataBaseController();
+                }
+            }
+        } else {
+            if (controller.connection.isClosed()) {
+                synchronized (controller.connection) {
+                    if (controller.connection.isClosed()) {
+                        controller.connection = DriverManager.getConnection(
+                                DATABASE_URL,
+                                DATABASE_USER,
+                                DATABASE_PASSWORD
+                        );
                     }
                 }
             }
@@ -80,6 +90,37 @@ public class DataBaseController {
         }
 
         return null;
+    }
+
+    public Object executeStatement(String sql) throws SQLException {
+        Statement statement = null;
+        Object result = null;
+        try {
+            statement = connection.createStatement();
+            statement.execute(sql);
+            result = statement.getResultSet();
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 17002) throw new SQLException();
+            return e.getMessage();
+        }
+        return result;
+    }
+
+    public Object executePreparedStatement(String sql, Object... args) throws SQLException {
+        PreparedStatement statement = null;
+        Object result = null;
+        try {
+            statement = connection.prepareStatement(sql);
+            for (int i = 0; i < args.length; i++) {
+                statement.setObject(i, args[i]);
+            }
+            statement.execute(sql);
+            result = statement.getResultSet();
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 17002) throw new SQLException();
+            return e.getMessage();
+        }
+        return result;
     }
 
     private Statement getNewStatement() {
